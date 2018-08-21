@@ -1,60 +1,79 @@
 package db
 
-import "strconv"
+import (
+	"strconv"
+	"sync"
+)
 
 type User struct {
 	ID    string
 	Name  string
 	Likes []string
+	m     sync.Mutex
 }
 
-var users = map[string]*User{
-	"1": &User{
+var users sync.Map
+
+func init() {
+	users.Store("1", &User{
 		ID:   "1",
 		Name: "Chris",
-	},
-	"2": &User{
+	})
+	users.Store("2", &User{
 		ID:   "2",
 		Name: "Steph",
-	},
-	"3": &User{
+	})
+	users.Store("3", &User{
 		ID:   "3",
 		Name: "Peter",
-	},
-	"4": &User{
+	})
+	users.Store("4", &User{
 		ID:   "4",
 		Name: "Tas",
-	},
-	"5": &User{
+	})
+	users.Store("5", &User{
 		ID:   "5",
-		Name: "Billy",
-	},
-	"6": &User{
-		ID:   "6",
 		Name: "Cameron",
-	},
+	})
+	users.Store("6", &User{
+		ID:   "6",
+		Name: "Tim",
+	})
+
+	nextID.id = 7
 }
 
-var nextID = 7
+var nextID struct {
+	id int
+	m  sync.Mutex
+}
 
 func GetUser(id string) *User {
-	return users[id]
+	u, ok := users.Load(id)
+	if !ok {
+		return nil
+	}
+	return u.(*User)
 }
 
 func AddUser(name string) {
-	id := strconv.Itoa(nextID)
-	users[id] = &User{
+	nextID.m.Lock()
+	id := strconv.Itoa(nextID.id)
+	users.Store(id, &User{
 		ID:   id,
 		Name: name,
-	}
-	nextID++
+	})
+	nextID.id++
+	nextID.m.Unlock()
 }
 
 func (u *User) Like(movieID string) {
+	u.m.Lock()
 	for _, id := range u.Likes {
 		if movieID == id {
 			return
 		}
 	}
 	u.Likes = append(u.Likes, movieID)
+	u.m.Unlock()
 }
