@@ -25,15 +25,34 @@ Create a folder for our project:
 
 ```shell
 $ mkdir -p $GOPATH/src/github.com/[your-github-username]/gqlgen-workshop
-$ mkdir 
-$ cd gqlgen-workshop
+$ cd $GOPATH/src/github.com/[your-github-username]/gqlgen-workshop
 ```
 
-## GraphQL
+## What is GraphQL?
+
+- A query language for an API
+- Ask for your exact data requirements
+- Schemas and type system
+
+### How Does This Compare to REST?
+
+- Multiple resources in a single query
+- Reduce overfetching
+- Schema provides a complete description of an endpoint
+
+
+### How do we Write a GraphQL Server?
+
+- Write Resolver functions that resolve the nodes and edges of a query
+- Schema first — end to end types
 
 ## What Are We Building?
 
-In this workshop we're going to build a graph that exposes a local mock database, a remove Movie API that we can search for results on, and combine both services into a single graph that allows users to like Movies.
+- In this workshop we're going to build a graph that exposes:
+    - a local mock database
+    - a remove Movie API that we can search for results on
+    - a combination of both services into a single graph that allows users to like Movies
+- This graph could be the starting point of a Movie liking application
 
 ## Local Database
 
