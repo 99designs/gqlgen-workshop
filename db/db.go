@@ -58,22 +58,22 @@ func GetUser(id string) *User {
 
 func AddUser(name string) {
 	nextID.m.Lock()
+	defer nextID.m.Unlock()
 	id := strconv.Itoa(nextID.id)
 	users.Store(id, &User{
 		ID:   id,
 		Name: name,
 	})
 	nextID.id++
-	nextID.m.Unlock()
 }
 
 func (u *User) Like(movieID string) {
 	u.m.Lock()
+	defer u.m.Unlock()
 	for _, id := range u.Likes {
 		if movieID == id {
 			return
 		}
 	}
 	u.Likes = append(u.Likes, movieID)
-	u.m.Unlock()
 }
