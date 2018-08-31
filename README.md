@@ -6,8 +6,8 @@ GraphQL is quickly supplanting REST as the front-end API standard, allowing clie
 
 ## Setup
 
-For this workshop you will need:
-- Go 1.9
+For this workshop you will ideally have:
+- Go 1.9 installed
 - A `$GOPATH` setup in your environment
 - `$GOTPATH/bin/` in your `$PATH`
 - Run `gofmt` on save
@@ -53,6 +53,31 @@ $ cd $GOPATH/src/github.com/[your-github-username]/gqlgen-workshop
     - a remove Movie API that we can search for results on
     - a combination of both services into a single graph that allows users to like Movies
 - This graph could be the starting point of a Movie liking application
+
+### Final Schema
+
+```
+type Query {
+    user(id: ID!): User
+    movies(search: String!): [Movie!]!
+}
+
+type User {
+    id: ID!
+    name: String!
+    likes: [Movie!]!
+}
+
+type Movie {
+    id: ID!
+    title: String!
+    year: String!
+}
+
+type Mutation {
+    like($userId: ID!, $movieId: ID!): User
+}
+```
 
 ## Local Database
 
