@@ -7,7 +7,7 @@ import (
 	"net/url"
 )
 
-var APIKey = "b309ecf7"
+var APIKey = "cf9ee131"
 var Host = "www.omdbapi.com"
 
 type Movie struct {
