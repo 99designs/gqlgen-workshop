@@ -198,8 +198,8 @@ The provided package `github.com/99designs/gqlgen-workshop/omdb` exposes an API 
 ```go
 type Movie struct {
 	ID    string
-    Title string
-    Year  string
+	Title string
+	Year  string
 }
 
 func Search(term string) ([]Movie, error)
@@ -230,7 +230,7 @@ type Query {
 
 ### Movie — Type Mapping
 
-Since we have a third party type, instead of having `gqlgen` generate a model for us, we can instead configure the type mapping in `gelgen.yml`:
+Since we have a third party type, instead of having `gqlgen` generate a model for us, we can instead configure the type mapping in `gqlgen.yml`:
 
 ```yaml
 models:
@@ -238,7 +238,7 @@ models:
     model: github.com/99designs/gqlgen-workshop/omdb.Movie
 ```
 
-And run generate:
+And regenerate:
 
 ```shell
 $ gqlgen
@@ -321,7 +321,7 @@ type UserResolver interface {
 }
 ```
 
-Add the following to `resolver.go`:
+Implement this interface in `resolver.go`:
 
 ```go
 type userResolver struct{ *Resolver }
@@ -333,7 +333,6 @@ func (r *Resolver) User() UserResolver {
 func (r *userResolver) Likes(ctx context.Context, u *db.User) ([]omdb.Movie, error) {
 	return omdb.GetAll(u.Likes)
 }
-
 ```
 
 ### Give it a Shot!
@@ -355,8 +354,6 @@ You should now be able to search for a movie title and add it to the list of lik
 
 ## Advanced Topics
 
-### Subscriptions
-
-### Testing
-
-### Directives
+- Directives
+- Subscriptions
+- Testing
