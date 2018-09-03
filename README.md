@@ -6,20 +6,13 @@ GraphQL is quickly supplanting REST as the front-end API standard, allowing clie
 
 ## Setup
 
-For this workshop you will ideally have:
-- Go 1.9 installed
-- A `$GOPATH` setup in your environment
-- `$GOTPATH/bin/` in your `$PATH`
+For this workshop you will ideally have setup:
+- Go 1.9+
+- A `$GOPATH` setup in your environment — we will assume `~/go`
+- `$GOPATH/bin/` in your `$PATH`
 - Run `gofmt` on save
 
-### Dependencies
-
-Install dependencies:
-
-```shell
-$ go get -v -u github.com/99designs/gqlgen/... \
-    github.com/99designs/gqlgen-workshop/...
-```
+### Setup — Dependencies
 
 Create a folder for our project:
 
@@ -28,9 +21,17 @@ $ mkdir -p $GOPATH/src/github.com/[your-github-username]/gqlgen-workshop
 $ cd $GOPATH/src/github.com/[your-github-username]/gqlgen-workshop
 ```
 
+Install dependencies:
+
+```shell
+$ go get -v -u github.com/99designs/gqlgen/... \
+    github.com/99designs/gqlgen-workshop/...
+```
+
 ## What is GraphQL?
 
 - A query language for an API
+- A runtime for fulfilling those queries
 - Ask for your exact data requirements
 - Schemas and type system
 
@@ -46,11 +47,22 @@ $ cd $GOPATH/src/github.com/[your-github-username]/gqlgen-workshop
 - Write Resolver functions that resolve the nodes and edges of a query
 - Schema first — end to end types
 
+## gqlgen
+
+- We looked at existing Go libraries doing GraphQL, the tradeoffs were not great:
+    - `graphql/graphql-go` — has a DSL that was easy to break and hard to read
+    - `graph-gophers/graphql-go` — very verbose, boilerplate, namespace collisions
+    - general lack of features
+- Goals of gqlgen:
+    - We want type safety without all the boiletplate
+    - Good developer experience
+    - A fast runtime
+
 ## What Are We Building?
 
 - In this workshop we're going to build a graph that exposes:
     - a local mock database
-    - a remove Movie API that we can search for results on
+    - a remove Movie API that we can search
     - a combination of both services into a single graph that allows users to like Movies
 - This graph could be the starting point of a Movie liking application
 
@@ -85,8 +97,8 @@ So first imagine we have a local app with a User entity:
 
 ```go
 type User struct {
-    ID   int
-    Name string
+	ID   int
+	Name string
 }
 ```
 
@@ -94,7 +106,6 @@ For this workshop we've provided this in the `db` package which also exposes the
 
 ```go
 func GetUser(id int) *User
-func AddUser(name string)
 ```
 
 ### GraphQL Schema
@@ -127,7 +138,13 @@ $ ls
 generated.go   gqlgen.yml     models_gen.go  resolver.go    schema.graphql server
 ```
 
-### Type Mapping
+## Type Mapping
+
+- `gqlgen` will handle mapping GraphQL types to Go
+- By default it will generate new types for us
+- Can be configured to map to existing types
+
+### Type Mapping Setup
 
 `gqlgen` has generated a model for us in `models_gen.go`, but we have a `User` model already, so let's map to that.  Edit `gqlgen.yml`:
 
@@ -182,7 +199,8 @@ The provided package `github.com/99designs/gqlgen-workshop/db` exposes an API cl
 ```go
 type Movie struct {
 	ID    string
-	Title string
+    Title string
+    Year  string
 }
 
 func Search(term string) ([]Movie, error)
@@ -198,6 +216,7 @@ First we should update our schema.  Add a new Type to `schema.graphql`:
 type Movie {
     id: ID!
     title: String!
+    year: String!
 }
 ```
 
@@ -337,7 +356,8 @@ You should now be able to search for a movie title and add it to the list of lik
 
 ## Advanced Topics
 
-- Testing
-- Directives
-- Subscriptions
+### Subscriptions
 
+### Testing
+
+### Directives
