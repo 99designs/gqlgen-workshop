@@ -12,34 +12,33 @@ type User struct {
 	m     sync.Mutex
 }
 
-var users sync.Map
+var users map[string]*User
 
 func init() {
-	users.Store("1", &User{
+	users["1"] = &User{
 		ID:   "1",
 		Name: "Chris",
-	})
-	users.Store("2", &User{
+	}
+	users["2"] = &User{
 		ID:   "2",
 		Name: "Steph",
-	})
-	users.Store("3", &User{
+	}
+	users["3"] = &User{
 		ID:   "3",
 		Name: "Peter",
-	})
-	users.Store("4", &User{
+	}
+	users["4"] = &User{
 		ID:   "4",
 		Name: "Tas",
-	})
-	users.Store("5", &User{
+	}
+	users["5"] = &User{
 		ID:   "5",
 		Name: "Cameron",
-	})
-	users.Store("6", &User{
+	}
+	users["6"] = &User{
 		ID:   "6",
 		Name: "Tim",
-	})
-
+	}
 	nextID.id = 7
 }
 
@@ -49,21 +48,21 @@ var nextID struct {
 }
 
 func GetUser(id string) *User {
-	u, ok := users.Load(id)
+	u, ok := users[id]
 	if !ok {
 		return nil
 	}
-	return u.(*User)
+	return u
 }
 
 func AddUser(name string) {
 	nextID.m.Lock()
 	defer nextID.m.Unlock()
 	id := strconv.Itoa(nextID.id)
-	users.Store(id, &User{
+	users[id] = &User{
 		ID:   id,
 		Name: name,
-	})
+	}
 	nextID.id++
 }
 

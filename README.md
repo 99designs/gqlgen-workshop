@@ -7,7 +7,7 @@ GraphQL is quickly supplanting REST as the front-end API standard, allowing clie
 ## Setup
 
 For this workshop you will ideally have setup:
-- Go 1.9+
+- Go 1.8+
 - A `$GOPATH` setup in your environment — we will assume `~/go`
 - `$GOPATH/bin/` in your `$PATH`
 - Run `gofmt` on save
