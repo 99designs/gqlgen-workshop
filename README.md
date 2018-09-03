@@ -167,11 +167,11 @@ Now we can connect to our backend through our generated resolver.  Add the follo
 
 ```go
 func (r *queryResolver) User(ctx context.Context, id string) (*db.User, error) {
-    user := db.GetUser(id)
-    if user == nil {
-        return nil, errors.New("User not found")
-    }
-    return user, nil
+	user := db.GetUser(id)
+	if user == nil {
+		return nil, errors.New("User not found")
+	}
+	return user, nil
 }
 ```
 
@@ -189,12 +189,11 @@ query {
         name
     }
 }
-
 ```
 
 ## External Services
 
-The provided package `github.com/99designs/gqlgen-workshop/db` exposes an API client we can use to query a public movie database:
+The provided package `github.com/99designs/gqlgen-workshop/omdb` exposes an API client we can use to query a public movie database:
 
 ```go
 type Movie struct {
