@@ -54,7 +54,7 @@ $ go get -v -u github.com/99designs/gqlgen/... \
     - `graph-gophers/graphql-go` — very verbose, boilerplate, namespace collisions
     - general lack of features
 - Goals of gqlgen:
-    - We want type safety without all the boiletplate
+    - We want type safety without all the boilerplate
     - Good developer experience
     - A fast runtime
 
@@ -87,7 +87,7 @@ type Movie {
 }
 
 type Mutation {
-    like($userId: ID!, $movieId: ID!): User
+    like(userId: ID!, movieId: ID!): User
 }
 ```
 
