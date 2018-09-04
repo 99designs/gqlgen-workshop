@@ -355,6 +355,8 @@ You should now be able to search for a movie title and add it to the list of lik
 
 ## Advanced Topics
 
-- Directives
-- Subscriptions
-- Testing
+- Directives — a way of tagging parts of your schema to declaratively add functionality, e.g. permissions
+- Subscriptions — subscribing to data changes on the server via web sockets
+- Data Loaders — a technique for optimising N+1 service queries
+- Testing — using the httptest package to perform queries against a running GraphQL server
+- Query Complexity — Compute complexity values for a query to avoid denial of service from crafted queries
