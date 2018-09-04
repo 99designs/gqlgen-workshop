@@ -12,40 +12,37 @@ type User struct {
 	m     sync.Mutex
 }
 
-var users map[string]*User
-
-func init() {
-	users["1"] = &User{
+var users = map[string]*User{
+	"1": &User{
 		ID:   "1",
 		Name: "Chris",
-	}
-	users["2"] = &User{
+	},
+	"2": &User{
 		ID:   "2",
 		Name: "Steph",
-	}
-	users["3"] = &User{
+	},
+	"3": &User{
 		ID:   "3",
 		Name: "Peter",
-	}
-	users["4"] = &User{
+	},
+	"4": &User{
 		ID:   "4",
 		Name: "Tas",
-	}
-	users["5"] = &User{
+	},
+	"5": &User{
 		ID:   "5",
 		Name: "Cameron",
-	}
-	users["6"] = &User{
+	},
+	"6": &User{
 		ID:   "6",
 		Name: "Tim",
-	}
-	nextID.id = 7
+	},
 }
 
-var nextID struct {
+var nextID = struct {
 	id int
 	m  sync.Mutex
-}
+}{7, sync.Mutex{}}
 
 func GetUser(id string) *User {
 	u, ok := users[id]
