@@ -234,6 +234,7 @@ Since we have a third party type, instead of having `gqlgen` generate a model fo
 
 ```yaml
 models:
+  # ...
   Movie:
     model: github.com/99designs/gqlgen-workshop/omdb.Movie
 ```
